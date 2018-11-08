@@ -11,6 +11,7 @@ import javax.net.ssl.SSLContext;
 import java.security.SecureRandom;
 import java.security.NoSuchAlgorithmException;
 import java.security.KeyManagementException;
+import javax.net.ssl.SSLSocketFactory;
 
 
 public class HttpsTrustManager implements X509TrustManager {
@@ -18,14 +19,12 @@ public class HttpsTrustManager implements X509TrustManager {
     private static final X509Certificate[] _AcceptedIssuers = new X509Certificate[]{};
 
     @Override
-    public void checkClientTrusted(
-            X509Certificate[] x509Certificates, String s)
+    public void checkClientTrusted(X509Certificate[] x509Certificates, String s)
             throws java.security.cert.CertificateException {
     }
 
     @Override
-    public void checkServerTrusted(
-            X509Certificate[] x509Certificates, String s)
+    public void checkServerTrusted(X509Certificate[] x509Certificates, String s)
             throws java.security.cert.CertificateException {
     }
 
@@ -42,7 +41,44 @@ public class HttpsTrustManager implements X509TrustManager {
         return _AcceptedIssuers;
     }
 
+    static SSLSocketFactory default_sslsocket_factory = null;
+    static HostnameVerifier default_hostname_verifier = null;
+
+    public static void setVerificationEnable() {
+        setVerification(true);
+    }
+
+    public static void setVerificationDisable() {
+        setVerification(false);
+    }
+
+    public static void setVerification(boolean on) {
+        if (default_hostname_verifier == null) {
+            default_hostname_verifier = HttpsURLConnection.getDefaultHostnameVerifier();
+        }
+
+        if (default_sslsocket_factory == null) {
+            default_sslsocket_factory = HttpsURLConnection.getDefaultSSLSocketFactory();
+        }
+
+        if (on) {
+            System.out.println("verify on");
+            HttpsURLConnection.setDefaultHostnameVerifier(default_hostname_verifier);
+            HttpsURLConnection.setDefaultSSLSocketFactory(default_sslsocket_factory);
+        } else {
+            System.out.println("verify off");
+            allowAllSSL();
+        }
+    }
+
     public static void allowAllSSL() {
+
+/*
+
+SSLContext sc = SSLContext.getInstance("SSL");
+sc.init(null, trustAllCerts, new java.security.SecureRandom());
+HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+ */
         HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
             @Override
             public boolean verify(String arg0, SSLSession arg1) {
