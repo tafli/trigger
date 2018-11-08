@@ -1,8 +1,11 @@
-package com.example.sphincter;
+package com.example.sphincter.sphincter;
 
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
+//import com.example.sphincter.sphincter.HttpsTrustManager;
+//import com.example.sphincter.sphincter.OnTaskCompleted;
 
 import java.io.BufferedReader;
 import java.io.IOException;

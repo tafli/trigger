@@ -1,4 +1,4 @@
-package com.example.sphincter;
+package com.example.sphincter.sphincter;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.net.wifi.WifiInfo;
+
+//import com.example.sphincter.OnTaskCompleted;
 
 
 enum UIState {
