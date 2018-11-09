@@ -77,10 +77,34 @@ public class MainActivity extends Activity implements OnTaskCompleted {
             }
         });
 */
+/*
+        System.out.println("A");
+        Spinner dropdown = (Spinner) findViewById(R.id.spinner1);
+        System.out.println("B");
+        String[] items = new String[]{"1", "2", "three"};
+        System.out.println("C");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        System.out.println("D");
+        dropdown.setAdapter(adapter);
+        System.out.println("E");
+*/
+
         stateIcon = (ImageView) findViewById(R.id.stateIcon);
 
         listener = this;
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        /*
+        // let's see if we can bind an action to the pref button
+        Preference button = (Preference) findViewById(R.id.myCoolButton);
+        button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                //code for what you want it to do
+                System.out.println("called onPreferenceClick");
+                return true;
+            }
+        });*/
 
         Button button_open = (Button) findViewById(R.id.button_open);
         button_open.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +121,8 @@ public class MainActivity extends Activity implements OnTaskCompleted {
                 new SphincterRequestHandler(listener, prefs).execute(Action.close_door);
             }
         });
+
+
     }
 
     private boolean isWifiConnected() {
@@ -216,7 +242,7 @@ public class MainActivity extends Activity implements OnTaskCompleted {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             // Launch settings activity
-            Intent i = new Intent(this, SettingsActivity.class);
+            Intent i = new Intent(this, Settings.class); //SettingsActivity.class);
             startActivity(i);
             return true;
         }
